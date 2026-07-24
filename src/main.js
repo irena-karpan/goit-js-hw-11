@@ -42,25 +42,26 @@ function requestHandler(event) {
         return;
     }
 
+    renderFunctions.clearGallery();
     renderFunctions.showLoader();
     
     getImagesByQuery(input.value.trim())
-        .then(response => {
+        .then(({ hits }) => {
 
-            if (!response.data.hits.length) {
-                throw new Error();
+            if (!hits.length) {
+                iziToast.error({
+                    ...iziErrorOptions,
+                    message: 'Sorry, there are no images matching your search query. Please try again!'
+                })
             }
-            renderFunctions.clearGallery();
 
-            renderFunctions.createGallery(response.data.hits);
+            renderFunctions.createGallery(hits);
         })
         .catch(error => iziToast.error({
             ...iziErrorOptions,
-            message: "Sorry, there are no images matching your search query. Please try again!",
+            message: "Something went wrong. Please try again later!",
         }))
-        .finally(
-            renderFunctions.hideLoader()
-        )
+        .finally( renderFunctions.hideLoader);
     
     event.target.reset();
 }

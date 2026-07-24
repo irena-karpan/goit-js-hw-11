@@ -9,7 +9,7 @@ const gallery = document.querySelector('.gallery');
 
 const loader = document.querySelector('.loader');
 
-let simpleGallery = new SimpleLightbox(' .gallery-link', {
+let simpleGallery = new SimpleLightbox('.gallery-link', {
     captionsData: 'alt',
     captionDelay: 250,
 });
