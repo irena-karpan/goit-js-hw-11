@@ -29,11 +29,14 @@ const iziErrorOptions = {
     timeout: 5000,
 };
 
+renderFunctions.hideLoader();
 
 form.addEventListener('submit', requestHandler);
 
 function requestHandler(event) {
     event.preventDefault();
+
+    renderFunctions.showLoader();
 
     const input = event.target.elements['search-text'];
 
@@ -44,6 +47,8 @@ function requestHandler(event) {
         });
         return;
     }
+
+    
     
     getImagesByQuery(input.value.trim())
         .then(response => {
@@ -55,6 +60,7 @@ function requestHandler(event) {
                 return;
             }
 
+            renderFunctions.hideLoader();
             renderFunctions.createGallery(response.data.hits);
         })
         .catch(error => iziToast.error({

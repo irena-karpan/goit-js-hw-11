@@ -7,6 +7,8 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('.gallery');
 
+const loader = document.querySelector('.loader');
+
 let simpleGallery = new SimpleLightbox(' .gallery-link', {
     captionsData: 'alt',
     captionDelay: 250,
@@ -23,10 +25,12 @@ export function clearGallery() {
 }
 
 export function showLoader() {
-    
+    // loader.classList.remove('.hidden');
+    loader.style.display = 'block';
 }
-
 export function hideLoader() {
+    // loader.classList.add('.hidden');
+    loader.style.display = 'none';
     
 }
 
