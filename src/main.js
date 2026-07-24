@@ -58,10 +58,13 @@ function requestHandler(event) {
 
             renderFunctions.createGallery(hits);
         })
-        .catch(error => iziToast.error({
-            ...iziErrorOptions,
-            message: "Something went wrong. Please try again later!",
-        }))
+        .catch(error => {
+            iziToast.error({
+                ...iziErrorOptions,
+                message: "Something went wrong. Please try again later!",
+            })
+            console.error(error);
+        })
         .finally( renderFunctions.hideLoader);
     
     event.target.reset();
