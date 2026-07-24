@@ -11,10 +11,6 @@ import iziToast from "izitoast";
 // styles
 import "izitoast/dist/css/iziToast.min.css";
 
-// // Simplelightbox
-// import SimpleLightbox from "simplelightbox";
-// // styles
-// import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.querySelector('.form');
 
@@ -36,8 +32,6 @@ form.addEventListener('submit', requestHandler);
 function requestHandler(event) {
     event.preventDefault();
 
-    renderFunctions.showLoader();
-
     const input = event.target.elements['search-text'];
 
     if (!input.value.trim()) {
@@ -48,25 +42,25 @@ function requestHandler(event) {
         return;
     }
 
-    
+    renderFunctions.showLoader();
     
     getImagesByQuery(input.value.trim())
         .then(response => {
 
-            renderFunctions.clearGallery();
-
             if (!response.data.hits.length) {
                 throw new Error();
-                return;
             }
+            renderFunctions.clearGallery();
 
-            renderFunctions.hideLoader();
             renderFunctions.createGallery(response.data.hits);
         })
         .catch(error => iziToast.error({
             ...iziErrorOptions,
             message: "Sorry, there are no images matching your search query. Please try again!",
-        } ));
+        }))
+        .finally(
+            renderFunctions.hideLoader()
+        )
     
     event.target.reset();
 }
