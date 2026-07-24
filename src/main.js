@@ -52,7 +52,8 @@ function requestHandler(event) {
                 iziToast.error({
                     ...iziErrorOptions,
                     message: 'Sorry, there are no images matching your search query. Please try again!'
-                })
+                });
+                return;
             }
 
             renderFunctions.createGallery(hits);

@@ -15,7 +15,7 @@ let simpleGallery = new SimpleLightbox('.gallery-link', {
 });
 
 export function createGallery(images) {
-    gallery.insertAdjacentHTML('beforeend', createMarkup(images));
+    gallery.innerHTML = createMarkup(images);
 
     simpleGallery.refresh();
 }
