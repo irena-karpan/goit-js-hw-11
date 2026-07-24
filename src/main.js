@@ -2,7 +2,9 @@
 
 import getImagesByQuery from './js/pixabay-api';
 
-import errorIcon from './img/error.svg'
+import errorIcon from './img/error.svg';
+
+import * as renderFunctions from './js/render-functions';
 
 // iziToast
 import iziToast from "izitoast";
@@ -37,9 +39,21 @@ function requestHandler(event) {
     }
     
     getImagesByQuery(input.value.trim())
-    .then(response => console.log(response))
-        .catch(error =>  iziToast.error({
-        ...iziErrorOptions,
-        message: "Sorry, there are no images matching your search query. Please try again!",
-    }))
+        .then(response => {
+
+            renderFunctions.clearGallery();
+            event.target.reset();
+
+            if (!response.data.hits.length) {
+                throw new Error();
+            }
+
+            renderFunctions.createGallery(response.data.hits);
+        })
+        .catch(error => iziToast.error({
+            ...iziErrorOptions,
+            message: "Sorry, there are no images matching your search query. Please try again!",
+        }));
+    
+    event.target.reset();
 }
