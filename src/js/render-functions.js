@@ -7,9 +7,15 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 const gallery = document.querySelector('.gallery');
 
-export function createGallery(images) {
+let simpleGallery = new SimpleLightbox(' .gallery-link', {
+    captionsData: 'alt',
+    captionDelay: 250,
+});
 
+export function createGallery(images) {
     gallery.insertAdjacentHTML('beforeend', createMarkup(images));
+
+    simpleGallery.refresh();
 }
 
 export function clearGallery() {

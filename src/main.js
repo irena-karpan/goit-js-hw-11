@@ -11,6 +11,11 @@ import iziToast from "izitoast";
 // styles
 import "izitoast/dist/css/iziToast.min.css";
 
+// // Simplelightbox
+// import SimpleLightbox from "simplelightbox";
+// // styles
+// import "simplelightbox/dist/simple-lightbox.min.css";
+
 const form = document.querySelector('.form');
 
 const iziErrorOptions = {
@@ -24,6 +29,7 @@ const iziErrorOptions = {
     timeout: 5000,
 };
 
+
 form.addEventListener('submit', requestHandler);
 
 function requestHandler(event) {
@@ -36,16 +42,17 @@ function requestHandler(event) {
             ...iziErrorOptions,
             message: "Empty data. Please try again!"
         });
+        return;
     }
     
     getImagesByQuery(input.value.trim())
         .then(response => {
 
             renderFunctions.clearGallery();
-            event.target.reset();
 
             if (!response.data.hits.length) {
                 throw new Error();
+                return;
             }
 
             renderFunctions.createGallery(response.data.hits);
@@ -53,7 +60,7 @@ function requestHandler(event) {
         .catch(error => iziToast.error({
             ...iziErrorOptions,
             message: "Sorry, there are no images matching your search query. Please try again!",
-        }));
+        } ));
     
     event.target.reset();
 }
